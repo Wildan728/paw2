@@ -8,7 +8,7 @@ const Buku = require("../model/buku");
 // });
 
 // format JSON
-router.post('path', (req, res) => {
+router.post('/', (req, res) => {
     const buku = new buku({
         judul: req.body.judul,
         penulis: req.body.penulis,
@@ -16,9 +16,13 @@ router.post('path', (req, res) => {
     });
 
     console.log(buku);
-    res.status(201).json({
-        message: "Data berhasil disimpan"
+    buku.save().then((createdBuku) => {
+        res.status(201).json({
+            message: "Data berhasil disimpan",
+            bookId: createdBuku._id
+        });
     });
+
 });
 
 module.exports = router;
