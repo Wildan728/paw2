@@ -1,28 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-const Buku = require("../model/buku");
+const BukuController = require("../controller/buku");
 /* GET users listing. */
 // router.get('/', function (req, res, next) {
 //     res.send('respond dari BUKU router');
 // });
 
 // format JSON
-router.post('/', (req, res) => {
-    const buku = new buku({
-        judul: req.body.judul,
-        penulis: req.body.penulis,
-        genre: req.body.genre
-    });
 
-    console.log(buku);
-    buku.save().then((createdBuku) => {
-        res.status(201).json({
-            message: "Data berhasil disimpan",
-            bookId: createdBuku._id
-        });
-    });
+//insert
+router.post('/', BukuController.createBuku);
 
-});
+//select
+router.get('/', BukuController.readBuku);
+
+//delete
+router.delete('/:id', BukuController.deleteBuku);
+
+//update
+router.put("/:id", BukuController.updateBuku);
 
 module.exports = router;

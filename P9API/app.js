@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 });
 
 mongoose.connect(
-  ///"mongodb://localhost:27017/dbbuku"
-  "mongodb+srv://mdp:cL9WrVemp1AmAxh1@cluster0.e0yel.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  //"mongodb:/ / localhost: 27017 / dbbuku"
+  "mongodb+srv://mdp:cL9WrVemp1AmAxh1@cluster0.e0yel.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0"
 ).then(() => {
   console.log("Connected to Database");
 }).catch((err) => {
