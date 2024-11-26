@@ -1,16 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BukuService } from '../services/buku.service';
+import { Buku } from '../models/buku.models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-buku',
   templateUrl: './buku.component.html',
   styleUrl: './buku.component.css'
 })
-export class BukuComponent {
-  constructor(public bukuService : BukuService){
+export class BukuComponent implements OnInit, OnDestroy{
+  bukuList: Buku[] = [];
+  private getBukuSub : Subscription = new Subscription();
 
+  // pagination
+  p: number = 1;
+
+  constructor(public bukuService : BukuService){
   }
+
+  ngOnInit(): void {
+    this.getBukuSub = this.bukuService.getBukuListener()
+    .subscribe((value : Buku[])=>{
+      this.bukuList = value;
+    });
+    this.bukuService.getBuku();
+  }
+
+  ngOnDestroy(): void {
+   
+  }
+
 
   simpanBuku(form : NgForm){
 
@@ -41,5 +61,6 @@ export class BukuComponent {
     console.log(genres);
 
     this.bukuService.addBuku(form.value.judul, form.value.penulis, genres);
+    form.resetForm();
   }
 }
