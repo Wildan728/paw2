@@ -15,7 +15,7 @@
                         class="form-control" id="judul"
                         ngModel name="judul" #judul="ngModel" required>
 
-                        <div *ngif="judul.invalid && bukuForm.submitted" class="invalid-feedback">
+                        <div *ngIf="judul.invalid && bukuForm.submitted" class="invalid-feedback">
                             Judul Buku harus diisi
                         </div>
 
@@ -48,6 +48,11 @@
 
                     <button type="submit" class="btn btn-primary">Simpan Buku</button>
                 </form>
+
+                <div *ngIf="messageExecute != ''" class="bg-success m-4 p-2 mt-0 text-dark bg-opacity-25">
+                    {{ messageExecute }}
+                </div>
+
             </div>
         </div>
 
@@ -72,7 +77,8 @@
                                 <td>{{ buku.judul }}</td>
                                 <td>{{ buku.penulis }}</td>
                                 <td><button class="btn btn-outline-primary btn-sm">Edit</button></td>
-                                <td><button class="btn btn-outline-danger btn-sm">DELETE</button></td>
+                                <td><button (click)="hapusBuku(buku)" class="btn btn-outline-danger btn-sm">DELETE</button></td>
+
                             </tr>
                         </tbody>
                     </table>
