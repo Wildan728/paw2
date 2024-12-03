@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Buku } from '../models/buku.models';
 import { Subject } from 'rxjs';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BukuService {
-  private url : string= "http://localhost:3000/buku";
+  private url : string= "http://localhost:3000/buku/";
 
   private subjectBuku = new Subject<Buku[]>();
   private subjectExexute = new Subject<string>;
@@ -62,7 +63,7 @@ export class BukuService {
       judul : judul,
       penulis : penulis,
       genre : genres
-    }
+    };
     
     //console.log(buku);
 

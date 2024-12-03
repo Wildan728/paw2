@@ -8,6 +8,12 @@
         <div class="col-md-6">
             <div class="card mb-4">
                 <form class="m-4" (submit)="simpanBuku(bukuForm)" #bukuForm="ngForm">
+
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="hidden" class="form-control" id="id" ngModel name="id" #id="ngModel"/>
+                    </div>
+
                     <div class="mb-3">
                         <label for="judul" class="form-label">Judul</label>
                         <input type="text" 
@@ -20,6 +26,7 @@
                         </div>
 
                     </div>
+
                     <div class="mb-3">
                         <label for="penulis" class="form-label">Penulis</label>
                         <input type="text" class="form-control" id="penulis" ngModel name="penulis" required>
@@ -46,7 +53,9 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Simpan Buku</button>
+                    <button type="submit" class="btn btn-primary">{{ mode }}</button>
+                    &nbsp;
+                    <button (click) = "onReset()" type="reset" class="btn btn-danger">Reset</button>
                 </form>
 
                 <div *ngIf="messageExecute != ''" class="bg-success m-4 p-2 mt-0 text-dark bg-opacity-25">
@@ -76,7 +85,8 @@
                             <tr *ngFor="let buku of bukuList | paginate: { itemsPerPage: 5, currentPage: p }">
                                 <td>{{ buku.judul }}</td>
                                 <td>{{ buku.penulis }}</td>
-                                <td><button class="btn btn-outline-primary btn-sm">Edit</button></td>
+                                <td><button (click)="tampilData(buku, bukuForm)" 
+                                    class = "btn btn-outline-primary btn-sm">Edit</button></td>
                                 <td><button (click)="hapusBuku(buku)" class="btn btn-outline-danger btn-sm">DELETE</button></td>
 
                             </tr>
