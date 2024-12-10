@@ -10,15 +10,15 @@ const BukuController = require("../../controller/buku");
 // format JSON
 
 //insert
-router.post('/', BukuController.createBuku);
+router.post('/', checkAuth, BukuController.createBuku);
 
 //select
-router.get('/', BukuController.readBuku);
+router.get('/', checkAuth, BukuController.readBuku);
 
 //delete
-router.delete('/:id', BukuController.deleteBuku);
+router.delete('/:id', checkAuth, BukuController.deleteBuku);
 
 //update
-router.put("/:id", BukuController.updateBuku);
+router.put("/:id", checkAuth, BukuController.updateBuku);
 
 module.exports = router;
