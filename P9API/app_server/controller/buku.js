@@ -50,7 +50,7 @@ const updateBuku = (req, res) => {
     });
 
     Buku.updateOne({ _id: req.params.id }, buku)
-        .then(() => {
+        .then((hasil) => {
             res.status(200).json({
                 message: "Update Berhasil",
                 result: hasil

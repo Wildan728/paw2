@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs';
 import { BukuService } from '../services/buku.service';
-import { group } from 'console';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  submitted: boolean = false;
-  executeState: string = '';
+  submitted = false;
+  executeState = '';
   showSpinner = false;
   private registerSub: Subscription = new Subscription();
 
@@ -22,11 +26,12 @@ export class RegisterComponent implements OnInit {
     public bukuService: BukuService,
     private fb: FormBuilder
   ) {
-    this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]]
-    },
+    this.registerForm = this.fb.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
+      },
       {
         validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
       }
@@ -44,6 +49,7 @@ export class RegisterComponent implements OnInit {
         }
       });
   }
+
   onSubmit(form: FormGroup) {
     this.submitted = true;
     this.showSpinner = true;
@@ -57,13 +63,13 @@ export class RegisterComponent implements OnInit {
   checkIfMatchingPasswords(
     passwordKey: string,
     passwordConfirmationKey: string
-  ): any {
+  ) {
     return (group: FormGroup) => {
       let passwordInput = group.controls[passwordKey];
-      let passwordConfirmationInput = group.controls[passwordKey];
+      let passwordConfirmationInput = group.controls[passwordConfirmationKey];
 
       if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({ norMatch: true });
+        return passwordConfirmationInput.setErrors({ notMatch: true });
       }
     };
   }

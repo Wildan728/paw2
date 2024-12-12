@@ -8,7 +8,7 @@ var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var bukusRouter = require("./app_server/routes/bukus");
 
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 require("./app_server/model/db")
 
 // CORS Enabled
