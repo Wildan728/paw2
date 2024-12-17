@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const checkAuth = require("../../middleware/check-auth");
 const BukuController = require("../../controller/buku");
 /* GET users listing. */
 // router.get('/', function (req, res, next) {

@@ -9,29 +9,29 @@ import { Subscription } from 'rxjs';
   templateUrl: './buku.component.html',
   styleUrl: './buku.component.css'
 })
-export class BukuComponent implements OnInit, OnDestroy{
+export class BukuComponent implements OnInit, OnDestroy {
   bukuList: Buku[] = [];
-  private getBukuSub : Subscription = new Subscription();
-  private messageSub : Subscription = new Subscription();
-  messageExecute : string="";
+  private getBukuSub: Subscription = new Subscription();
+  private messageSub: Subscription = new Subscription();
+  messageExecute: string = "";
 
-  mode : string = "Simpan";
+  mode: string = "Simpan";
 
   // pagination
   p: number = 1;
 
-  constructor(public bukuService : BukuService){
+  constructor(public bukuService: BukuService) {
   }
 
   ngOnInit(): void {
     this.getBukuSub = this.bukuService.getBukuListener()
-    .subscribe((value : Buku[])=>{
-      this.bukuList = value;
-    });
+      .subscribe((value: Buku[]) => {
+        this.bukuList = value;
+      });
     this.messageSub = this.bukuService.exexuteBukuListener()
-    .subscribe((value)=>{
-      this.messageExecute = value;
-    });
+      .subscribe((value) => {
+        this.messageExecute = value;
+      });
 
     this.bukuService.getBuku();
   }
@@ -41,42 +41,42 @@ export class BukuComponent implements OnInit, OnDestroy{
     this.messageSub.unsubscribe();
   }
 
-  tampilData(buku : Buku, form : NgForm){
-    var gen1 : boolean = false;
-    var gen2 : boolean = false;
-    var gen3 : boolean = false;
+  tampilData(buku: Buku, form: NgForm) {
+    var gen1: boolean = false;
+    var gen2: boolean = false;
+    var gen3: boolean = false;
 
-    buku.genre.forEach((value)=>{
-      if(value.toUpperCase().trim()==="BIOGRAFI"){
+    buku.genre.forEach((value) => {
+      if (value.toUpperCase().trim() === "BIOGRAFI") {
         gen1 = true;
-      }else if(value.toUpperCase().trim()==="PENDIDIKAN"){
+      } else if (value.toUpperCase().trim() === "PENDIDIKAN") {
         gen2 = true;
-      }else if(value.toUpperCase().trim()==="LAINNYA"){
+      } else if (value.toUpperCase().trim() === "LAINNYA") {
         gen3 = true;
       }
     });
 
     form.setValue({
-      id : buku._id,
-      judul : buku.judul,
-      penulis : buku.penulis,
-      genre1 : gen1,
-      genre2 : gen2,
-      genre3 : gen3
+      id: buku._id,
+      judul: buku.judul,
+      penulis: buku.penulis,
+      genre1: gen1,
+      genre2: gen2,
+      genre3: gen3
     })
 
-     this.mode= "Perbaiki"
-  }
-  
-  onReset(){
-    this.mode= "Simpan"
-    this.messageExecute=""
+    this.mode = "Perbaiki"
   }
 
+  onReset() {
+    this.mode = "Simpan"
+    this.messageExecute = ""
+  }
 
-  simpanBuku(form : NgForm){
 
-    if(form.invalid){
+  simpanBuku(form: NgForm) {
+
+    if (form.invalid) {
       console.log("Tidak Valid");
       alert("Data tidak valid");
       return;
@@ -84,22 +84,22 @@ export class BukuComponent implements OnInit, OnDestroy{
 
     let genres: string[] = [];
 
-    if (form.value.genre1==true){
+    if (form.value.genre1 == true) {
       genres.push("Biografi")
     }
 
-    if(form.value.genre2==true){
+    if (form.value.genre2 == true) {
       genres.push("Pendidikan")
     }
 
 
-    if(form.value.genre3==true){
+    if (form.value.genre3 == true) {
       genres.push("Lainnya")
     }
 
-    if(this.mode.toUpperCase() === "SIMPAN"){
+    if (this.mode.toUpperCase() === "SIMPAN") {
       this.bukuService.addBuku(form.value.judul, form.value.penulis, genres);
-    } else{
+    } else {
       this.bukuService.updateBuku(form.value.judul, form.value.penulis, genres, form.value.id);
     }
 
@@ -108,14 +108,14 @@ export class BukuComponent implements OnInit, OnDestroy{
     console.log(form.value.penulis);
     console.log(genres);
 
-    
+
     form.resetForm();
-    this.mode= "Simpan";
+    this.mode = "Simpan";
 
   }
 
-  hapusBuku(buku : Buku){
-    if (confirm("Hapus Data Buku : " + buku.judul)){
+  hapusBuku(buku: Buku) {
+    if (confirm("Hapus Data Buku : " + buku.judul)) {
       this.bukuService.deleteBuku(buku)
     }
   }

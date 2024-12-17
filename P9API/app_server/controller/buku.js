@@ -4,10 +4,11 @@ const createBuku = (req, res) => {
     const buku = new Buku({
         judul: req.body.judul,
         penulis: req.body.penulis,
-        genre: req.body.genre
+        genre: req.body.genre,
+        creator: req.userData.userid,
     });
 
-    console.log(buku);
+    //console.log(buku);
     buku.save()
         .then((createdBuku) => {
             res.status(201).json({
@@ -16,7 +17,9 @@ const createBuku = (req, res) => {
             });
         })
         .catch((err) => {
-            res.status(500).json();
+            res.status(500).json({
+                message: "internal server error !",
+            });
         });
 
 };
