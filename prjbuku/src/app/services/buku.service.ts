@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Buku } from '../models/buku.models';
 import { Subject } from 'rxjs';
 import { response } from 'express';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BukuService {
-  private url: string = "http://localhost:3000/buku/";
-
+  //private url: string = "http://localhost:3000/buku/";
+  private url: string = environment.api + 'buku/';
   private subjectBuku = new Subject<Buku[]>();
   private subjectExexute = new Subject<string>;
 

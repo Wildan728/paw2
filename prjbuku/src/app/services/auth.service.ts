@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 
 
@@ -12,7 +13,8 @@ import { isPlatformBrowser } from '@angular/common';
     providedIn: 'root',
 })
 export class AuthService {
-    private url: string = 'http://localhost:3000/users/';
+    //private url: string = 'http://localhost:3000/users/';
+    private url: string = environment.api + 'users/';
     private authStatusListener = new Subject<boolean>();
     private isAuthenticated = false;
     private token: string | null = '';
@@ -55,7 +57,9 @@ export class AuthService {
                         );
                         console.log(expirationDate);
                         this.saveAuthData(token, expirationDate);
-                        this.router.navigate(['/admin/buku']);
+                        this.router.navigate(['/admin/buku']).then(()=>{
+                            window.location.reload();
+                        })
                     }
                 },
                 (error) => {
@@ -111,6 +115,7 @@ export class AuthService {
             this.isAuthenticated = true;
             this.setAuthTimer(expiresIn / 1000);
             this.authStatusListener.next(true);
+            this.router.navigate(['/admin/buku']);
         }
     }
 

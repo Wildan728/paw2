@@ -12,6 +12,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { InterfacesComponent } from './interfaces/response-api';
 
 
 
@@ -23,7 +24,8 @@ import { AuthInterceptor } from './services/auth-interceptor';
     DashboardComponent,
     BukuComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    InterfacesComponent
   ],
   imports: [
     BrowserModule,

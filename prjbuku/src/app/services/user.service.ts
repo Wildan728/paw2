@@ -4,12 +4,15 @@ import { Subject } from 'rxjs';
 import { User } from '../models/user.models';
 import { response } from 'express';
 import { error } from 'console';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private url: string = "http://localhost:3000/users/";
+  //private url: string = "http://localhost:3000/users/";
+  private url: string = environment.api + 'users/';
   private subjectExecuteUser = new Subject<string>();
 
   constructor(public http: HttpClient) { }
